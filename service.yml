@@ -26,7 +26,24 @@ spec:
       limits:
         memory: "128Mi"
         cpu: "500m"
-
+      volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: hello-world-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-world-config
+data:
+  index.html: |
+    <html>
+    <head><title>Hello Kubernetes</title></head>
+    <body><h1>Hello, Kubernetes!</h1></body>
+    </html>
 ---
 apiVersion: v1
 kind: Service
